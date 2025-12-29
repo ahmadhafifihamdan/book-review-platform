@@ -10,15 +10,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
 
-app.get("/test", (req, res) => {
-  res.render("test");
-});
-
-app.post("/submit", (req, res) => {
-  console.log(req.body);
-  res.send("OK");
-});
-
 app.listen(PORT, () => {
     console.log("server is running on port: ", PORT);
 })
