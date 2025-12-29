@@ -24,3 +24,14 @@ CREATE TABLE IF NOT EXISTS review (
 SELECT * FROM book;
 SELECT * FROM rating;
 SELECT * FROM review;
+
+---------
+ALTER TABLE rating
+ADD CONSTRAINT fk_rating_book
+FOREIGN KEY (bookId)
+REFERENCES book(id);
+
+ALTER TABLE review
+ADD CONSTRAINT fk_review_book
+FOREIGN KEY (bookId)
+REFERENCES book(id);
