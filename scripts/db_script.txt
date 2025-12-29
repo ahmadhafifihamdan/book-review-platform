@@ -29,9 +29,11 @@ SELECT * FROM review;
 ALTER TABLE rating
 ADD CONSTRAINT fk_rating_book
 FOREIGN KEY (bookId)
-REFERENCES book(id);
+REFERENCES book(id)
+ON DELETE CASCADE;
 
 ALTER TABLE review
 ADD CONSTRAINT fk_review_book
 FOREIGN KEY (bookId)
-REFERENCES book(id);
+REFERENCES book(id)
+ON DELETE CASCADE;
