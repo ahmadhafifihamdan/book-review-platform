@@ -1,0 +1,26 @@
+create database if not exists booksdb;
+use booksdb;
+
+CREATE TABLE IF NOT EXISTS book (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  BookName VARCHAR(45) NOT NULL,
+  Description VARCHAR(12000),
+  BookImage VARCHAR(255),
+  BookAuthor VARCHAR(45)
+);
+
+CREATE TABLE IF NOT EXISTS rating (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  bookId INT,
+  rating INT
+);
+
+CREATE TABLE IF NOT EXISTS review (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  bookId INT,
+  review VARCHAR(12000)
+);
+
+SELECT * FROM book;
+SELECT * FROM rating;
+SELECT * FROM review;
