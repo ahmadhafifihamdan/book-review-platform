@@ -8,6 +8,16 @@ const getBooksHandler = async(req, res) => {
     return res.render("books", { books });
 }
 
+const getCreateBookPage = (req, res) => {
+    return res.render("create-book-form");
+}
+
+const createBook = async(req, res) => {
+    return null;
+}
+
 module.exports = {
-    getBooksHandler
+    getBooksHandler,
+    getCreateBookPage,
+    createBook
 }
