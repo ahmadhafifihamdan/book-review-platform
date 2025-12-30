@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { getBooksHandler, getCreateBookPage, createBook, getBookDetails } = require("../controllers/book.controller");
+const { getBooksHandler, getCreateBookPage, createBook, getBookDetails, deleteBook } = require("../controllers/book.controller");
 
 const router = Router();
 
@@ -14,5 +14,9 @@ router.route("/new")
 // Book details page
 router.route("/:id")
     .get(getBookDetails);
+
+// Delete book (request from HTML)
+router.route("/:id/delete")
+    .post(deleteBook);
 
 module.exports = router;

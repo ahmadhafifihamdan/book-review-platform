@@ -15,7 +15,7 @@ const getCreateBookPage = (req, res) => {
 const getBookDetails = async (req, res) => {
     const { id } = req.params;
 
-    const rows = await db.query("SELECT BookName, Description, BookImage, BookAuthor FROM book WHERE id = ?", [id]);
+    const rows = await db.query("SELECT id, BookName, Description, BookImage, BookAuthor FROM book WHERE id = ?", [id]);
 
     if (rows.length === 0) {
         return res.status(404).json({ message: "Fail to get any book" });
@@ -44,9 +44,22 @@ const createBook = async(req, res) => {
     return res.redirect(`/books/${id}`);
 }
 
+const deleteBook = async (req, res) => {
+    const { id } = req.params;
+
+    const result = await db.query("DELETE FROM book WHERE id = ?", [id]);
+
+    if (result.affectedRows === 0) {
+        return res.status(400).json({ message: "No book to delete."});
+    }
+
+    return res.redirect("/books")
+}
+
 module.exports = {
     getBooksHandler,
     getCreateBookPage,
     createBook,
-    getBookDetails
+    getBookDetails,
+    deleteBook
 }
