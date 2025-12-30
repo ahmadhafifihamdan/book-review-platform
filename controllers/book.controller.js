@@ -25,7 +25,23 @@ const getBookDetails = async (req, res) => {
 }
 
 const createBook = async(req, res) => {
-    return null;
+    const { BookName, Description, BookImage, BookAuthor } = req.body;
+
+    if (!BookName || !BookAuthor) {
+        return res.status(400).json({ message: "Title and author are required."})
+    }
+    
+    const existing = await db.query("SELECT 1 FROM book WHERE BookName = ? AND BookAuthor = ?", [BookName, BookAuthor]);
+
+    if (existing.length > 0) {
+        return res.status(400).json({ message: "Book already exist"});
+    }
+
+    const result = await db.query("INSERT INTO book (BookName, Description, BookImage, BookAuthor) VALUES (?, ?, ?, ?)", [BookName, Description, BookImage, BookAuthor]);
+
+    const id = result.insertId;
+
+    return res.redirect(`/books/${id}`);
 }
 
 module.exports = {
