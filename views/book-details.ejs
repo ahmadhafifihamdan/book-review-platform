@@ -43,6 +43,10 @@
                 <p>No reviews yet</p>
             </section>
 
+            <form method="POST" action="/books/<%= book.id %>/delete">
+                <button type="submit">Delete</button>
+            </form>
+
             <p>
                 <a href="/books">Back to book list</a>
             </p>
