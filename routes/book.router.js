@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { getBooksHandler, getCreateBookPage, createBook } = require("../controllers/book.controller");
+const { getBooksHandler, getCreateBookPage, createBook, getBookDetails } = require("../controllers/book.controller");
 
 const router = Router();
 
@@ -10,5 +10,9 @@ router.route("/").get(getBooksHandler);
 router.route("/new")
     .get(getCreateBookPage)
     .post(createBook);
+
+// Book details page
+router.route("/:id")
+    .get(getBookDetails);
 
 module.exports = router;

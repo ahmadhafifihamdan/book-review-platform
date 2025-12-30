@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>
+        <%= book.BookName %>
+    </title>
+</head>
+
+<body>
+    <h1>
+        <%= book.BookName %>
+    </h1>
+
+    <p>
+        <strong>Author:</strong>
+        <%= book.BookAuthor %>
+    </p>
+
+    <% if (book.BookImage) { %>
+        <div>
+            <img src="<%= book.BookImage %>" alt="<%= book.BookName %>" width="200" />
+        </div>
+        <% } %>
+
+            <section>
+                <h2>Description</h2>
+                <p>
+                    <%= book.Description %>
+                </p>
+            </section>
+
+            <!-- Placeholder for average rating -->
+            <section>
+                <h2>Average Rating</h2>
+                <p>Not rated yet</p>
+            </section>
+
+            <!-- Placeholder for reviews -->
+            <section>
+                <h2>Reviews</h2>
+                <p>No reviews yet</p>
+            </section>
+
+            <p>
+                <a href="/books">Back to book list</a>
+            </p>
+</body>
+
+</html>
