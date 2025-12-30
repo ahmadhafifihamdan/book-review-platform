@@ -1,7 +1,7 @@
 const express = require("express");
-const asyncHandler = require("express-async-handler");
 const { PORT } = require("./config/env.config");
 const db = require("./config/db.config");
+const router= require("./routes/index.route");
 const app = express();
 
 // View engine
@@ -21,10 +21,7 @@ app.use(express.static("public"));
   }
 })();
 
-app.get("/db-test", asyncHandler(async (req, res) => {
-  const rows = await db.query("SELECT 1 AS ok");
-  res.json(rows[0]);
-}));
+app.use("/", router);
 
 app.use((req, res) => {
   // Render 404 here later when we got there

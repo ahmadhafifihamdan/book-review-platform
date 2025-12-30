@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Book List</title>
+</head>
+
+<body>
+    <h1>Books</h1>
+
+    <% if (!books || books.length===0) { %>
+        <p>No books yet.</p>
+        <% } else { %>
+            <ul>
+                <% books.forEach(book=> { %>
+                    <li>
+                        <h3>
+                            <%= book.BookName %>
+                        </h3>
+                        <p>Author: <%= book.BookAuthor %>
+                        </p>
+
+                        <% if (book.BookImage) { %>
+                            <img src="<%= book.BookImage %>" alt="<%= book.BookName %>" width="120" />
+                            <% } %>
+                    </li>
+                    <% }) %>
+            </ul>
+            <% } %>
+</body>
+
+</html>
