@@ -5,9 +5,9 @@ const insertReview = async (req, res) => {
     const { reviewText } = req.body;
 
     if (!reviewText || !reviewText.trim()) {
-        return res.json({ message: "Cannot be empty" });
+        return res.redirect(`/books/${id}?reviewError=empty`);
     }
-
+    
     await db.query("INSERT INTO review (bookId, review) VALUES (?, ?)", [id, reviewText]);    
     
     return res.redirect(`/books/${id}`);
