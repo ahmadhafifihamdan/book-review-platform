@@ -31,11 +31,14 @@
                 </p>
             </section>
 
-            <!-- Placeholder for average rating -->
             <section>
                 <h2>Average Rating</h2>
-                <p>Not rated yet</p>
-            </section>
+                <% if (!displayAvgRating) { %>
+                    <p>Not rated yet</p>
+                <% } else { %>
+                    <p> Book Rating: <%= displayAvgRating %></p>
+                <% } %>
+                </section>
             <form method="POST" action="/books/<%= book.id %>/ratings">
                 <label for="rating">Rate this book:</label>
             
