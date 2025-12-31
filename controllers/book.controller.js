@@ -14,17 +14,22 @@ const getCreateBookPage = (req, res) => {
 
 const getBookDetails = async (req, res) => {
     const { id } = req.params;
+    
+    // Book details
     const rows = await db.query("SELECT id, BookName, Description, BookImage, BookAuthor FROM book WHERE id = ?", [id]);
 
     if (rows.length === 0) {
         return res.status(404).json({ message: "Fail to get any book" });
     }
 
+    // Calculate and Display Ratings
     const avgRating = await db.query("SELECT ROUND(AVG(rating),2) AS AVGRATING FROM rating WHERE bookId = ?", [id]);
-    
     const displayAvgRating = avgRating[0].AVGRATING;
 
-    return res.render("book-details", { book: rows[0], displayAvgRating });
+    // Display reviews
+    const reviews = await db.query("SELECT review FROM review WHERE bookId = ?", [id]);
+
+    return res.render("book-details", { book: rows[0], displayAvgRating, reviews });
 }
 
 const createBook = async(req, res) => {
