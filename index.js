@@ -23,17 +23,15 @@ app.use(express.static("public"));
 
 app.use("/", router);
 
+// 404 – unmatched routes
 app.use((req, res) => {
-  // Render 404 here later when we got there
-  return res.status(404).send("404 - Not Found");
+    res.status(404).render("error/404");
 });
 
+// 500 – runtime errors
 app.use((err, req, res, next) => {
-  console.error(err); // server-side logging
-  const status = err.statusCode || 500;
-  const message = status === 404 ? "Not Found" : "Something went wrong";
-
-  return res.status(status).send(message);
+    console.error(err);
+    res.status(500).render("error/500");
 });
 
 app.listen(PORT, () => {
