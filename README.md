@@ -80,3 +80,9 @@ This is **not** a frontend showcase. UI is intentionally minimal and functional.
 This project should be viewed as:
 
 > **A clean, rubric-driven Express + MySQL CRUD application demonstrating backend fundamentals and relational data handling — built for correctness, not aesthetics.**
+
+<img width="1250" height="707" alt="image" src="https://github.com/user-attachments/assets/5c881857-ccba-408e-b613-a76bae0ff6ec" />
+<img width="1123" height="1023" alt="image" src="https://github.com/user-attachments/assets/d2e46d13-f415-4583-82e3-a8921ce993ec" />
+<img width="706" height="739" alt="image" src="https://github.com/user-attachments/assets/ac9e77e9-7d68-40ac-82f7-4936f1bb2d61" />
+
+
