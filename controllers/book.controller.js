@@ -5,7 +5,7 @@ const getBooksHandler = async(req, res) => {
     const order = String(sort).toUpperCase() === 'DESC' ? 'DESC' : 'ASC';
     const books = await db.query(`SELECT id, BookName, Description, BookImage, BookAuthor FROM book ORDER BY BookName ${order}`);
     
-    return res.render("books", { books });
+    return res.render("books", { books, sort: order });
 }
 
 const getCreateBookPage = (req, res) => {

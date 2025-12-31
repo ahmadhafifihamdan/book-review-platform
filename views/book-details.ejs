@@ -3,95 +3,368 @@
 
 <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
         <%= book.BookName %>
     </title>
+
+    <style>
+        :root {
+            --bg: #f5f9ff;
+            --card: #ffffff;
+            --text: #0f172a;
+            --muted: #475569;
+
+            --primary: #2563eb;
+            --primary-2: #1d4ed8;
+
+            --border: #dbeafe;
+            --shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+            --shadowHover: 0 14px 30px rgba(37, 99, 235, 0.18);
+
+            --danger: #ef4444;
+            --danger-2: #dc2626;
+
+            --radius: 14px;
+
+            --gold: #f59e0b;
+            /* gold */
+            --gold-soft: rgba(245, 158, 11, 0.35);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.4;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        /* Top nav */
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        .btn {
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: var(--card);
+            color: var(--text);
+            box-shadow: 0 1px 0 rgba(15, 23, 42, 0.03);
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            box-shadow: var(--shadowHover);
+            border-color: rgba(37, 99, 235, 0.35);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-2);
+            border-color: var(--primary-2);
+        }
+
+        .btn-danger {
+            background: #fff;
+            border-color: rgba(239, 68, 68, 0.35);
+            color: var(--danger-2);
+        }
+
+        .btn-danger:hover {
+            background: rgba(239, 68, 68, 0.06);
+            border-color: rgba(239, 68, 68, 0.55);
+            box-shadow: 0 14px 30px rgba(239, 68, 68, 0.10);
+        }
+
+        /* Layout */
+        .hero {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 18px;
+            margin-bottom: 16px;
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 16px;
+        }
+
+        .cover {
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            border-radius: 14px;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.10), rgba(59, 130, 246, 0.06));
+            border: 1px solid rgba(37, 99, 235, 0.18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .meta h1 {
+            margin: 0 0 6px 0;
+            letter-spacing: -0.02em;
+            font-size: 2rem;
+        }
+
+        .meta .author {
+            margin: 0 0 12px 0;
+            color: var(--muted);
+        }
+
+        .meta .desc-title {
+            margin: 10px 0 6px 0;
+            font-size: 1.05rem;
+            letter-spacing: -0.01em;
+        }
+
+        .meta .desc {
+            margin: 0;
+            color: var(--text);
+            white-space: pre-wrap;
+        }
+
+        .meta {
+            position: relative;
+        }
+
+        .meta .delete-top {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+        }
+
+        .muted {
+            color: var(--muted);
+        }
+
+        /* Rating full-width card */
+        .full {
+            margin-bottom: 16px;
+        }
+
+        /* Star rating (auto submit) */
+        .stars {
+            display: inline-flex;
+            flex-direction: row-reverse;
+            gap: 8px;
+            align-items: center;
+            user-select: none;
+        }
+
+        .stars input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .stars label {
+            font-size: 30px;
+            line-height: 1;
+            cursor: pointer;
+            color: var(--gold-soft);
+            transition: transform 120ms ease, color 120ms ease;
+        }
+
+        .stars label:hover {
+            transform: translateY(-1px);
+            color: rgba(245, 158, 11, 0.70);
+        }
+
+        /* Fill stars on hover */
+        .stars label:hover,
+        .stars label:hover~label {
+            color: rgba(245, 158, 11, 0.85);
+        }
+
+        /* Fill stars when selected */
+        .stars input:checked~label {
+            color: var(--gold);
+        }
+
+        .hint {
+            margin-top: 8px;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        /* Reviews */
+        .reviews-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            gap: 10px;
+        }
+
+        .review-item {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px;
+            background: #fff;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px 10px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: #fff;
+            color: var(--text);
+            margin-top: 8px;
+            resize: vertical;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .hero {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <h1>
-        <%= book.BookName %>
-    </h1>
-
-    <p>
-        <strong>Author:</strong>
-        <%= book.BookAuthor %>
-    </p>
-
-    <% if (book.BookImage) { %>
-        <div>
-            <img src="<%= book.BookImage %>" alt="<%= book.BookName %>" width="200" />
+    <div class="container">
+        <div class="topbar">
+            <a class="btn" href="/books">← Back to Books</a>
+            <a class="btn btn-primary" href="/book/new">+ Add Book</a>
         </div>
-        <% } %>
 
-            <section>
-                <h2>Description</h2>
-                <p>
-                    <%= book.Description %>
+        <div class="hero">
+            <div class="card">
+                <div class="cover">
+                    <img src="<%= book.BookImage || '/images/no-image-attached.png' %>" onerror="this.src='/images/no-image-attached.png'"
+                        alt="<%= book.BookName %>" />
+
+                </div>
+            </div>
+
+            <div class="card meta">
+                <h1>
+                    <%= book.BookName %>
+                </h1>
+                <p class="author"><strong>Author:</strong>
+                    <%= book.BookAuthor %>
                 </p>
-            </section>
-
-            <section>
-                <h2>Average Rating</h2>
-                <% if (!displayAvgRating) { %>
-                    <p>Not rated yet</p>
-                <% } else { %>
-                    <p> Book Rating: <%= displayAvgRating %></p>
-                <% } %>
-                </section>
-            <form method="POST" action="/books/<%= book.id %>/ratings">
-                <label for="rating">Rate this book:</label>
-            
-                <select name="rating" id="rating" required>
-                    <option value="">-- Select --</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
-            
-                <button type="submit">Submit Rating</button>
-            </form>
-
-            <!-- Placeholder for reviews -->
-            <section>
-                <h2>Reviews</h2>
                 
-                <% if (reviews.length===0) { %>
-                    <p>No reviews yet.</p>
+                <div class="delete-top">
+                    <form method="POST" action="/books/<%= book.id %>/delete"
+                        onsubmit="return confirm('Delete this book? This will also remove its ratings and reviews.');">
+                        <button class="btn btn-danger" type="submit">Delete</button>
+                    </form>
+                </div>
+
+                <h2 class="desc-title">Description</h2>
+                <% if (book.Description) { %>
+                    <p class="desc"><%= book.Description %></p>
                     <% } else { %>
-                        <ul>
-                            <% reviews.forEach(r=> { %>
-                                <li>
-                                    <%= r.review %>
-                                </li>
-                                <% }) %>
-                        </ul>
+                        <p class="desc muted">No description provided.</p>
                         <% } %>
+            </div>
+        </div>
 
-            </section>
-            <h2>Add a Review</h2>
-            
+        <section class="card full">
+            <h2 style="margin:0 0 10px 0; font-size:1.1rem; letter-spacing:-0.01em;">Average Rating</h2>
+
+            <% if (displayAvgRating===null || displayAvgRating===undefined) { %>
+                <p class="muted" style="margin:0 0 12px 0;">Not rated yet.</p>
+                <% } else { %>
+                    <p style="margin:0 0 12px 0;"><strong>
+                            <%= displayAvgRating %>
+                        </strong> / 5</p>
+                    <% } %>
+
+                        <!-- Auto-submit star rating (no submit button) -->
+                        <form method="POST" action="/books/<%= book.id %>/ratings">
+                            <div class="stars" aria-label="Star rating">
+                                <input type="radio" id="star5" name="rating" value="5" required
+                                    onchange="this.form.submit()" />
+                                <label for="star5" title="5 stars">★</label>
+
+                                <input type="radio" id="star4" name="rating" value="4" onchange="this.form.submit()" />
+                                <label for="star4" title="4 stars">★</label>
+
+                                <input type="radio" id="star3" name="rating" value="3" onchange="this.form.submit()" />
+                                <label for="star3" title="3 stars">★</label>
+
+                                <input type="radio" id="star2" name="rating" value="2" onchange="this.form.submit()" />
+                                <label for="star2" title="2 stars">★</label>
+
+                                <input type="radio" id="star1" name="rating" value="1" onchange="this.form.submit()" />
+                                <label for="star1" title="1 star">★</label>
+                            </div>
+
+                            <div class="hint">Click a star to rate (1–5). It saves immediately.</div>
+
+                            <noscript>
+                                <div class="hint">JavaScript is disabled — rating requires a submit button.</div>
+                            </noscript>
+                        </form>
+        </section>
+
+        <section class="card" style="margin-bottom:16px;">
+            <h2 style="margin:0 0 10px 0; font-size:1.1rem; letter-spacing:-0.01em;">Reviews</h2>
+
+            <% if (!reviews || reviews.length===0) { %>
+                <p class="muted" style="margin:0;">No reviews yet.</p>
+                <% } else { %>
+                    <ul class="reviews-list">
+                        <% reviews.forEach(r=> { %>
+                            <li class="review-item">
+                                <%= r.review %>
+                            </li>
+                            <% }) %>
+                    </ul>
+                    <% } %>
+        </section>
+
+        <section class="card">
+            <h2 style="margin:0 0 10px 0; font-size:1.1rem; letter-spacing:-0.01em;">Add a Review</h2>
+
             <form method="POST" action="/books/<%= book.id %>/reviews">
-                <div>
-                    <label for="reviewText">Your review</label>
-                </div>
-            
-                <div>
-                    <textarea id="reviewText" name="reviewText" rows="4" required></textarea>
-                </div>
-            
-                <button type="submit">Submit Review</button>
-            </form>
+                <label for="reviewText" style="font-weight:600;">Your review</label>
+                <textarea id="reviewText" name="reviewText" rows="4" required></textarea>
 
-            <form method="POST" action="/books/<%= book.id %>/delete">
-                <button type="submit">Delete</button>
+                <div style="margin-top:12px;">
+                    <button class="btn btn-primary" type="submit">Submit Review</button>
+                </div>
             </form>
-
-            <p>
-                <a href="/books">Back to book list</a>
-            </p>
+        </section>
+    </div>
 </body>
 
 </html>

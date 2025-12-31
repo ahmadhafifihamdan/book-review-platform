@@ -3,31 +3,265 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>Book List</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Books</title>
+
+    <style>
+        :root {
+            --bg: #f5f9ff;
+            --card: #ffffff;
+            --text: #0f172a;
+            --muted: #475569;
+
+            --primary: #2563eb;
+            --primary-2: #1d4ed8;
+
+            --border: #dbeafe;
+            --shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+            --shadowHover: 0 14px 30px rgba(37, 99, 235, 0.18);
+
+            --radius: 14px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 18px;
+        }
+
+        .title {
+            margin: 0;
+            font-size: 1.6rem;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            margin-top: 6px;
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        .top-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: var(--card);
+            color: var(--text);
+            box-shadow: 0 1px 0 rgba(15, 23, 42, 0.03);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-2);
+            border-color: var(--primary-2);
+        }
+
+        .sort {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: var(--card);
+        }
+
+        .sort label {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .sort select {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 6px 8px;
+            background: #fff;
+            color: var(--text);
+        }
+
+        .empty {
+            background: var(--card);
+            border: 1px dashed var(--border);
+            border-radius: var(--radius);
+            padding: 18px;
+            color: var(--muted);
+        }
+
+        /* ===== GRID ===== */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+        }
+
+        /* ===== CARD ===== */
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 14px;
+            box-shadow: var(--shadow);
+            transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+        }
+
+        .card a {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadowHover);
+            border-color: rgba(37, 99, 235, 0.45);
+        }
+
+        .image-wrapper {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            border-radius: 14px;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.10), rgba(59, 130, 246, 0.06));
+            border: 1px solid rgba(37, 99, 235, 0.18);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .title-text {
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            margin: 0 0 6px 0;
+            font-size: 1rem;
+        }
+
+        .author {
+            color: var(--muted);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1200px) {
+            .grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                align-items: stretch;
+            }
+
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <h1>Books</h1>
+    <div class="container">
+        <header>
+            <div>
+                <h1 class="title">Books</h1>
+                <div class="subtitle">Click a book to view details, ratings, and reviews.</div>
+            </div>
 
-    <% if (!books || books.length===0) { %>
-        <p>No books yet.</p>
-        <% } else { %>
-            <ul>
-                <% books.forEach(book=> { %>
-                    <li>
-                        <h3>
-                            <%= book.BookName %>
-                        </h3>
-                        <p>Author: <%= book.BookAuthor %>
-                        </p>
+            <div class="top-actions">
+                <form class="sort" method="GET" action="/books">
+                    <label for="sort">Sort:</label>
+                    <select id="sort" name="sort" onchange="this.form.submit()">
+                        <option value="ASC" <%=(String(sort || '' ).toUpperCase() !=='DESC' ) ? 'selected' : '' %>>A → Z
+                        </option>
+                        <option value="DESC" <%=(String(sort || '' ).toUpperCase()==='DESC' ) ? 'selected' : '' %>>Z → A
+                        </option>
+                    </select>
+                    <noscript>
+                        <button class="btn" type="submit">Apply</button>
+                    </noscript>
+                </form>
 
-                        <% if (book.BookImage) { %>
-                            <img src="<%= book.BookImage %>" alt="<%= book.BookName %>" width="120" />
-                            <% } %>
-                    </li>
-                    <% }) %>
-            </ul>
-            <% } %>
+                <a class="btn btn-primary" href="/books/new">+ Add Book</a>
+            </div>
+        </header>
+
+        <% if (!books || books.length===0) { %>
+            <div class="empty">
+                <strong>No books yet.</strong>
+                <div>Add your first book to get started.</div>
+            </div>
+            <% } else { %>
+                <div class="grid">
+                    <% books.forEach(book=> { %>
+                        <div class="card" title="Open book details">
+                            <a href="/books/<%= book.id %>">
+                                <div class="image-wrapper">
+                                <img src="<%= book.BookImage || '/images/no-image-attached.png' %>" onerror="this.src='/images/no-image-attached.png'"
+                                    alt="<%= book.BookName %>" />
+
+                                </div>
+
+                                <p class="title-text">
+                                    <%= book.BookName %>
+                                </p>
+                                <p class="author">
+                                    <%= book.BookAuthor %>
+                                </p>
+                            </a>
+                        </div>
+                        <% }) %>
+                </div>
+                <% } %>
+    </div>
 </body>
 
 </html>
