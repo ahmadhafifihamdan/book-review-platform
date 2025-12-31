@@ -237,6 +237,16 @@
             background: #fff;
         }
 
+        .error-box {
+            margin-bottom: 12px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            background: rgba(239, 68, 68, 0.08);
+            border: 1px solid rgba(239, 68, 68, 0.35);
+            color: #991b1b;
+            font-size: 0.95rem;
+        }
+        
         textarea {
             width: 100%;
             padding: 10px 10px;
@@ -354,7 +364,11 @@
 
         <section class="card">
             <h2 style="margin:0 0 10px 0; font-size:1.1rem; letter-spacing:-0.01em;">Add a Review</h2>
-
+            <% if (reviewError==='empty' ) { %>
+                <div class="error-box">
+                    Review cannot be empty.
+                </div>
+            <% } %>
             <form method="POST" action="/books/<%= book.id %>/reviews">
                 <label for="reviewText" style="font-weight:600;">Your review</label>
                 <textarea id="reviewText" name="reviewText" rows="4" required></textarea>

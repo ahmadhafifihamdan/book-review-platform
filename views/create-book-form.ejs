@@ -145,7 +145,11 @@
         <div class="card">
             <h1>Add Book</h1>
             <div class="subtitle">Fill in the details below to add a new book.</div>
-
+            <% if (typeof error !=="undefined" ) { %>
+                <div class="error">
+                    <%= error %>
+                </div>
+            <% } %>
             <form method="POST" action="/books/new">
                 <div>
                     <label for="BookName">Title</label>
