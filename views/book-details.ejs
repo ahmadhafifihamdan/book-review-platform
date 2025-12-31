@@ -57,7 +57,19 @@
             <!-- Placeholder for reviews -->
             <section>
                 <h2>Reviews</h2>
-                <p>No reviews yet</p>
+                
+                <% if (reviews.length===0) { %>
+                    <p>No reviews yet.</p>
+                    <% } else { %>
+                        <ul>
+                            <% reviews.forEach(r=> { %>
+                                <li>
+                                    <%= r.review %>
+                                </li>
+                                <% }) %>
+                        </ul>
+                        <% } %>
+
             </section>
             <h2>Add a Review</h2>
             
