@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const { getBooksHandler, getCreateBookPage, createBook, getBookDetails, deleteBook } = require("../controllers/book.controller");
 const { insertRating } = require("../controllers/rating.controller");
+const { insertReview } = require("../controllers/comment.controller");
 
 const router = Router();
 
@@ -19,6 +20,10 @@ router.route("/:id")
 // Rate books
 router.route("/:id/ratings")
     .post(insertRating);
+
+// Review on book
+router.route("/:id/reviews")
+    .post(insertReview);
 
 // Delete book (request from HTML)
 router.route("/:id/delete")
