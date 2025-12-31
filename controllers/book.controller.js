@@ -41,7 +41,7 @@ const getBookDetails = async (req, res) => {
 const createBook = async(req, res) => {
     const { BookName, Description, BookImage, BookAuthor } = req.body;
 
-    if (!BookName || !BookAuthor) {
+    if (!BookName || !BookName.trim() || !BookAuthor || !BookAuthor.trim()) {
         return res.status(400).render("create-book-form", {
             error: "Title and author are required."
         });

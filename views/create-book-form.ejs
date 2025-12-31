@@ -133,6 +133,19 @@
             background: var(--primary-2);
             border-color: var(--primary-2);
         }
+
+        .alert {
+          border-radius: 10px;
+          padding: 10px 12px;
+          font-size: 14px;
+          margin-bottom: 12px;
+        }
+
+        .alert-error {
+          background: #fdecec;
+          border: 1px solid #f5c2c7;
+          color: #842029;
+        }
     </style>
 </head>
 
@@ -146,9 +159,9 @@
             <h1>Add Book</h1>
             <div class="subtitle">Fill in the details below to add a new book.</div>
             <% if (typeof error !=="undefined" ) { %>
-                <div class="error">
+                <div class="alert alert-error">
                     <%= error %>
-                </div>
+            </div>
             <% } %>
             <form method="POST" action="/books/new">
                 <div>
