@@ -47,6 +47,8 @@ const createBook = async(req, res) => {
         });
     }
 
+    const existing = await db.query("SELECT 1 FROM book WHERE BookName = ? AND BookAuthor = ?", [BookName, BookAuthor]);
+
     if (existing.length > 0) {
         return res.status(400).render("create-book-form", {
             error: "This book already exists."
